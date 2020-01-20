@@ -90,7 +90,11 @@ type AccountRecord struct {
 }
 
 func (r *Account) Scan(src interface{}) error {
-	return json.Unmarshal(src.([]byte), r)
+	v, okay := src.([]byte)
+	if !okay {
+		v = []byte(src.(string))
+	}
+	return json.Unmarshal(v, r)
 }
 
 func (r Account) Value() (driver.Value, error) {
