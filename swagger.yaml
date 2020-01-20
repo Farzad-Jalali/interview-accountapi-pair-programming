@@ -1,0 +1,322 @@
+swagger: '2.0'
+info:
+  version: "0.0.1"
+  title: account-api
+host: api.form3.tech
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/vnd.api+json; charset=utf-8
+  - application/json; charset=utf-8
+
+paths:
+  /health:
+    get:
+      tags:
+        - Account API
+      summary: Get health
+      responses:
+        200:
+          description: healthy
+          schema:
+            type: object
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/ApiError"
+
+  /organisation/accounts:
+    post:
+      summary: Create an account
+      tags:
+        - Account API
+      consumes:
+        - application/vnd.api+json
+        - application/json
+      parameters:
+        - name: creation request
+          in: body
+          schema:
+            $ref: "#/definitions/AccountCreation"
+      responses:
+        201:
+          description: creation response
+          schema:
+            $ref: "#/definitions/AccountCreationResponse"
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ApiError"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ApiError"
+        409:
+          description: Conflict
+          schema:
+            $ref: "#/definitions/ApiError"
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/ApiError"
+
+    get:
+      summary: List all organisation accounts
+      tags:
+        - Account API
+      parameters:
+        - name: filter[organisation_id]
+          in: query
+          description: Organisation id
+          required: false
+          type: array
+          items:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: List of accounts
+          schema:
+            $ref: "#/definitions/AccountDetailsListResponse"
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ApiError"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ApiError"
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/ApiError"
+
+  /organisation/accounts/{id}:
+    get:
+      summary: Fetch organisation account
+      tags:
+        - Account API
+      parameters:
+        - name: id
+          in: path
+          description: Account Id
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Accounts details
+          schema:
+            $ref: "#/definitions/AccountDetailsResponse"
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ApiError"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ApiError"
+        404:
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ApiError"
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/ApiError"
+
+    delete:
+      summary: Delete organisation account
+      tags:
+        - Account API
+      parameters:
+        - name: id
+          in: path
+          description: Account Id
+          required: true
+          type: string
+          format: uuid
+        - name: version
+          in: query
+          description: Version
+          required: true
+          type: integer
+          minimum: 0
+      responses:
+        204:
+          description: Account deleted
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ApiError"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ApiError"
+        404:
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ApiError"
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/ApiError"
+
+definitions:
+  Account:
+    type: object
+    properties:
+      type:
+        $ref: '#/definitions/ResourceType'
+      id:
+        type: string
+        format: uuid
+      version:
+        type: integer
+        minimum: 0
+      organisation_id:
+        type: string
+        format: uuid
+      created_on:
+        type: string
+        format: date-time
+        readOnly: true
+      modified_on:
+        type: string
+        format: date-time
+        readOnly: true
+      attributes:
+        $ref: "#/definitions/AccountAttributes"
+
+  NewAccount:
+    type: object
+    required:
+      - id
+      - organisation_id
+      - type
+      - attributes
+    properties:
+      type:
+        type: string
+        enum:
+          - accounts
+        x-nullable: false
+      id:
+        type: string
+        format: uuid
+        x-nullable: false
+      organisation_id:
+        type: string
+        format: uuid
+        x-nullable: false
+      attributes:
+        $ref: "#/definitions/AccountAttributes"
+
+  AccountAttributes:
+    properties:
+      account_classification:
+        default: Personal
+        description: Is the account business or personal?
+        enum: [Personal, Business]
+        type: string
+      account_matching_opt_out: {default: false, description: 'Is the account opted
+          out of account matching, e.g. CoP?', type: boolean}
+      account_number: {description: Account number of the account. A unique number
+                         will automatically be generated if not provided., example: '41426819', pattern: '^[A-Z0-9]{0,64}$',
+        type: string}
+      alternative_bank_account_names:
+        description: Alternative account names. Used for Confirmation of Payee matching.
+        items: {maxLength: 140, minLength: 1, type: string}
+        maxItems: 3
+        type: array
+      bank_account_name: {description: Primary account name. Used for Confirmation
+                            of Payee matching. Required if confirmation_of_payee_enabled is true for
+                            the organisation., maxLength: 140, minLength: 1, type: string}
+      bank_id: {description: Local country bank identifier. In the UK this is the
+                  sort code., example: '400300', pattern: '^[A-Z0-9]{0,16}$', type: string}
+      bank_id_code: {description: ISO 20022 code used to identify the type of bank
+                       ID being used, example: GBDSC, pattern: '^[A-Z]{0,16}$', type: string}
+      base_currency: {description: ISO 4217 code used to identify the base currency
+                        of the account, example: GBP, pattern: '^[A-Z]{3}$', type: string}
+      bic: {description: SWIFT BIC in either 8 or 11 character format, example: NWBKGB22,
+            pattern: '^([A-Z]{6}[A-Z0-9]{2}|[A-Z]{6}[A-Z0-9]{5})$', type: string}
+      country: {description: ISO 3166-1 code used to identify the domicile of the
+                  account, example: GB, pattern: '^[A-Z]{2}$', type: string}
+      customer_id: {description: A free-format reference that can be used to link
+                      this account to an external system, example: '12345', pattern: '^[a-zA-Z0-9-$@.,
+          ]{0,256}$', type: string}
+      first_name: {description: Customer first name., maxLength: 40, minLength: 1,
+                   type: string}
+      iban: {description: IBAN of the account. Will be calculated from other fields
+               if not supplied., example: GB11NWBK40030041426819, pattern: '^[A-Z]{2}[0-9]{2}[A-Z0-9]{0,64}$',
+        type: string}
+      joint_account: {default: false, description: 'Is the account joint?', type: boolean}
+      secondary_identification: {description: 'Secondary identification, e.g. building
+          society roll number. Used for Confirmation of Payee.', maxLength: 140, minLength: 1,
+                                 type: string}
+      title: {description: Customer title., example: Ms, maxLength: 40, minLength: 1,
+              type: string}
+    required: [country]
+    type: object
+    x-access: [Public]
+
+  AccountCreation:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/NewAccount'
+
+  AccountCreationResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Account'
+      links:
+        $ref: '#/definitions/Links'
+
+  AccountDetailsResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Account'
+      links:
+        $ref: '#/definitions/Links'
+
+  AccountDetailsListResponse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Account'
+      links:
+        $ref: '#/definitions/Links'
+        
+  ApiError:
+    type: object
+    properties:
+      error_message:
+        type: string
+      error_code:
+        type: string
+        format: uuid
+
+  Links:
+    type: object
+    properties:
+      self:
+        type: string
+      first:
+        type: string
+      prev:
+        type: string
+      next:
+        type: string
+      last:
+        type: string
+
+  ResourceType:
+    type: string
+    enum:
+      - accounts

@@ -1,0 +1,40 @@
+language: go
+go:
+- 1.11.x
+services:
+- docker
+env:
+  global:
+  - SECSCAN_IMAGE=288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/secscan-go:latest
+  - secure: IU6dUglK0nvxBaSRogHVpyoYf03EKdm+Vpwu5Lu4MgRmE6IJqa7+UpgnZpx54/D21roe2z7RWUHR8FvnEdJC8QX3IZbw5Uyf5bAp1P0zFZDM5Mm71ZmV+hhG0ZLsEzyZVBqc/1vm0C/koIPNBVMpyBMS+4SAYMDhKNZ8g1kgEh0wEFHBg+SAbshEjibI0z7wUQyFjeQdznf57Eo2gGSdmJbkkg8YuJY5JC+PomVw2Y7zOrdDAv7SPZKSXt38evylF4LccKDqe4C0Ln6chxFs4YWBqICmhUvxwa2McCjukLsl5ILsOVuHk7TKu1p5IJd1v18vbKBzWAkqzt8QaNHx2SGWGRWLj1/pyKAt3fETcNg5uGR2XHLzF71wZ8fz5NRmTPcTCvyEX+nIXVQo83ZXi5LGvaBI+okFc7Gz/dPPKWAD/1pD0r44ieK+6j598C11Pv1aa4bSWkAkH4UcTP4wC7bWPZWQ2v9oSccAGBFhaExnyTeLCP6imU6mqv2UvJyYtV3Kj0JgHmReId/4t0BG8V5lklvAHj6QP/au6D0D5ljG/zQW7XLcXYn7plTGr35tvQQtwf0xPczT31QGt8BoCW0swlH4dYHPgtGAnpLu6j06c6bRv4f1WBBB1mGRFWenvkgPOEcZjF/PYYVFjvwojb6IMJLK6QRV3Wl+3AoZmvM=
+  - secure: gBbpIodgOTySexn/u3e/AWRgNaqm2za7wYwoSnoVYf2lhU51EXfKbVq+UTLp5S18dwIqG6GEc9cCnsAvnX7PQc+FD8YrgT+ETYtNMD0oAHzUPOlhf+VFQUPWtspHmZtQXRqyiugkVXFuB5X5AYbfkErlwaKMX9oPQI0H4KMcam7qEYN0Fyj7BY9WvLppmTGl6Gb+BN7tkrPmr7HOfa2gbYio18788Wx94Whapi7o3eVtOUrTrdCurmlEM82Qs0dIGUbyb7mnQ5wdRts0a1I1QHPofbPtoNKOuyZa1NkECWTUx0aq7eiyWmgsuOl8Q5tdwV8ZNIeqHO9DpEJyi00U/D6YpCd6YO5cs4nX/HbKjQ/C1oRE0U8GxFPcpUk0G+wfAJj7MDCfT9yM/3h8xAdmAE6T+24IXY7wZ26tmYXSVJmRdMIwSIsQsyWhYJkoSEGmJ7EqjYOrCgI6hSOoMbaQ6tFyhJmamMFhMcq/zblZXXqgG29noXlcEUcodDhmyByOoDFDcG/CIzFo8jVrpi4/4Q23sdv33wl2P32TbzMLY6xzTU/izDOvKi251Y9ZGUlEX2x/bVpcIFnqYPEwlJDfiMmQs4/EHWSpCNeXaRcTL5hDGazhD9g6XW5uC4rg8jfuWGs6esJw8iEy8EfYMKAZ9MigrG829F8YlaFl45XWUh0=
+  - secure: TnPFeJopqf/Qe+jpXvMC+FNRlvgvJkN1nuaWhsaoXrDUeO6V8fIvk4qhUS7Dz0AFHlvV/HCgoVJr6K93xBz8i9IKDehzk6DWBk0nFLpy2+7KTx+vig0HV87HeQI+d40jcH22+4ho3quLosvyQgcDGOvZ3hm5mS6rzj5f2TrA9F8en+XgzxXE2WDGOQf8qZVpSxEiPebEyYt+7SsiM8jLujYn0pL8JBw4jBFjYwSrZFxX7dDKKUKfHT8Hba2F4Qg7j8/z2OqivBUhEnsiCVbZy54BiMdqyraOoQjbVkdzo+4MNpYwXJjJSctE4hvCnN4Xrz0IUNq/WL6waC8h8teaDUOTPAiVGVVYfHjl0dp4iO2ApSMEJUInO2h5Phl6f426+wA2+LuVs6FDy2iPb3ZgkEXn7zR7lxEccOB0rCVPwGU3ue2v5148QWOV8OWR5VJkeYdnar/joBn4gDEsw8Yf/6/RpHJ2q+U1FDyAqShsmCAh4g2J/nS7le4nxuLnpcqnngsbnrsOKxUSlqqw3PWGA1kcUDb/bX/DgldXmIPfkApHrqOrWjaJZ+8/ikkLhHBQa5Sltb0bI5OFRT9rYHHYvCBLF/mS537vfRc0RFGWQXkmwlxWAqaeoP8gz9AxsnIHoYx39JA4Ji5VoIgqqGeU7XXf5AqX5PSwEWccg9fRvo4=
+  - secure: nT4CbFzEAa0PLG0n8e4N8PXAX7j0QiVw2F5DJX9c0dGdNrMY3PvhXTYFYjhwP9UzLlMfDkjWJCS9/nAsIuJwqpETGgRkJn+tXZDpEUUuFhZRDkame6LG2wpWNDK7zq3Aby6bvVrCuoHItlGJY3Wv1ZyPdyl1vavCY1BedshwX7r14STgS05Y/AexouLP8SOjbweA5OL8uyQc3kTSGbLDJHNsGouMxbqVWahkVbhQTShNP5skemHg0p6NZBpO4uR32BzbgJ7TVo3zzP/dV/kyo5Wgunm2bVTF5MiSAvxtg0fI/bWjHL30Yb1sbFj6g7aB3TJyVRUQEFiE63Xdv+zBYy0g2T/u9aNgaT2Ci8HOzwFSn8EzsleBls3eqJYHgEIK55S2H5EcZQI9gCAkSSxjXYVUmBr6x8X+/kEcf9eC85DTZ2eS/tdIKlFH4ej7sG31oQybBvk82LgaIkKjNo9PT4vO6Z484CuU+f5sndsleb10DlvWpB5+ad3kVJCcmarUtw7R7imXsQ0aM3WtoZv9DJw0/DVpS8FgyhFxQFc6a/RL5ZhvOV4puYXN1lI2xI7kLbCqjzNA5r7FbZbmkQlB6NN/dqJ45guxcwN4x1aunEJZ+bjuGfTxjjWsyavy84ryByMSfzt+gGuVvzBu20TGCF2Sm3RN5DcjlIcyfZEw7C8=
+  - secure: bva7T40Js4EsOwnq1o23Et5TLC1RWKK5Q7JzO8ud03G2U9+M0oeZI/DZ2QHExlqShxJ9PJxC8S45iGkdAXu6DY7d4Urz0F0jFzLs59ozfW3ukzX7WfwLAM75JAkBjFNzjxaMQaF14s56/hHUax6P5mUNmFY8ZMS3243YCNO5zN7Ak9hqHYSBzXV9+EaO9N8WefZ6x+UvHOY3XkZgJp2Z7hvy7n+1S8dZp9f/JXipOWqlgUiI9FWIcB7ax3qa3FHn69ZF8OMlFbqAizlolxC38zgu6rINA/p6pbUP0UUIwuEZIALbLNnUsrBOja1IXQJvUhIaHAmJ/S5So7CfUqaUHMEylcW01ufx+vgOmc5Xi3HOwIZqBBn6uhaAUdDGLVN9hzFR066QVrieXx31aQgN9pFKO3+zRKC2WKWP6sm09l2hUdy3ioLtYMelehZd7Lp7n0UF2VbriiiS7wQ1A+/yWpwjlwYZTtQCkYNu6bXPEEs7gLm7ivHJrMw1iK7mv+gFiAuUSh7rXckhHg8KOtmADOTkMQKBDxyDacDZ9u2cP4mDr32ljcPcEwy4tkmOpm8DeQpyOJvUygx0jiaSOQ3MBVyHFDe03pafhCS2uFtl+QAm8LcZdsGU3srrzbZS3vBvqxVpvVItS46eZ1bItNfampyIsf0KJAHqHNkBPKrko54=
+  - secure: kWfINprPiaaiJBp3MGo7PxNl8yLdZCIddnAPjjrVexsrb30nWHEy6hRlmQt+HvVYtAzdoDT4UQr8C6dDalxIkNRaxVsjee0tYatevXt4rvdmiBzt4iSFsPE7sygxnvL/k1QcPtZFXLt/Fv++6+51XhhEF/kL1MJrV/TOhnmBFCj51GW2YSkVWznN1GgL3z+oADxzHNSUDaIz3g9RQYBAEs4IwxCUCUTKPWtf1wPS5XBT7ww9wXglrHfmEVE+aop2L4G9YyiJuY92J9BuGbZDCBV+POS8WBsNz//7jPA2QNn9kVVDyXo9lpkOxpx/uj2J9+8OwGXSCWoesB8xjccNdRlSuyyQIw8LZFaF1k0zC/AJz2qJ4QS1fQmkM4DWHlywbxB6zJN53fdUZnHMUPRRkJ0pCEpSJNrgGS8P2auHZMznwevDz/ISXgpxDLKXSxfh2y1Im9R0gij15Em3gG8vZPe501L2/IxZSC/K0wTF/EPWUGBaqPHUg8fsMDROIq/+RtNbIIqTLLogcZR8APC20mVJGhb+j1kmFmxz7uj6kecKTovF20fd61jYNIEBnxN5rJXVtCbfStKxJmT6QMx7Dp6e2rKADrKt0BPXYNQV247Ft68wD/5GY25Rnf/lKEKq0N1MgZSbEekATxbQxVqG6EAaUqtdUp4NxQjb0y9Imzc=
+jobs:
+  include:
+  - stage: test
+    name: Run Go Tests
+    install:
+    - if [[ -a .git/shallow ]]; then git fetch --unshallow --tags; fi
+    - go get golang.org/x/tools/cmd/goimports
+    script:
+    - make
+  - stage: test
+    name: Run Security Scans
+    before_cache:
+    - 'mkdir -p $HOME/docker && docker images -a --filter=''dangling=false'' --format
+      ''{{.Repository}}:{{.Tag}} {{.ID}}'' | xargs -n 2 -t sh -c ''test -e $HOME/docker/$1.tar.gz
+      || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz''
+
+'
+    before_install:
+    - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh
+      -c "zcat {file} | docker load"; fi
+    install:
+    - sudo pip install awscli
+    script:
+    - eval $(aws ecr get-login --region eu-west-1 --no-include-email)
+    - docker run --rm -v $(pwd):/code -e TRAVIS -e SNYK_TOKEN -e REPO=$TRAVIS_REPO_SLUG
+      $SECSCAN_IMAGE

@@ -1,0 +1,39 @@
+language: go
+go:
+- 1.9.x
+install:
+- if [[ -a .git/shallow ]]; then git fetch --unshallow --tags; fi
+- go get golang.org/x/tools/cmd/goimports
+services:
+- docker
+env:
+  global:
+  - SECSCAN_IMAGE=288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/secscan-go:latest
+  - AWS_REGION=eu-west-1
+  - secure: bg/8qCyTSNJe5bnPqwRuj+BmbUVQ+lKlFUL9zJWAK8oU09UEM4rsKYuhz8sDn3O8OcZWfNreboqlu9nsv2SymCBSLP20iagv+UopSHYMiSEjqtldzUIhc8v/zVFEBv4w43H4+7Cnp0Fpqq9s/uKcxQoGbssIVcV+Kk0u3af4DQ8cBp0a0s7ogLPomRKmZ6TXZ+k5AfxGa3fbNZAuijgFXKwclUeGCofejQHHw6VcuTvzcrf60G9pd34Hzc+sJhAHGEDvYIjZtck9hRxeGOlniSVSEZTubn+HSp6hAc6+5VuIQgdq4bCL05p7i3q0h7qnzygT4xhUcvpS3Z27Kfx6CJHzSGG8NoVMw20C5wzHDwxfwEnMcueM/Awsoi78SxkIHYT5LmHEvAZOJxRwbGbhD2jLBtYfO7JkNQfG3a4zTAa5PBndWBkzymOIIOoeUFiGtakNGuJLiBEHwnQCl1e2YrZ5QqqQqvbITsz5zaziDO1/KRQSfqU7J4ScdZSmlAhXLD1jYLK9EwdU4729JFmcOSVw7TPH1LedJFbceuRwhkG91XHRAS8IYfH8Q6CzJgPaP5Si46zofOyPqpLkQDYtsV+1CuexGNQWxS0xfJZoA8SN0wrhLBRqku12Ln5flZUwdLEJkjVXuTjhqder+LMe+/SQwutZ2aktjfMnZFf5Q80=
+  - secure: NZIu52AeSD37HAlhL5DeP23T4uGJBjSev0ItQ9YMAKb8HyG1dWPpCb1h9KCQMnCtv52mYyPwGp9usxjyknegsNYllQvnk+6UvASoFM2Z0KQiJWEGBhsCA1+sDuECMBroopABfVeGmGEov5zQhRr50XyCPwr8kEIMDjFaA4putT4zQs2IolhSpALhyRCs/BjJV1ia8gJybbxargh3o2VqaAqNV5g1S2/qns48DUfFRtDMBpAAQfNf5CETPG7pvFbzXtSvUkPewUjjx9Ps8hctfdmS8TNx1xbadAYwL7Ur/ULejLQEJuqK1cCWpHI6CQtJOyBLKnktg/iKxkErR+uNs3fj5dHzPtvsSwwx/KoVi704ghvXTFodReJfeC2K9qwmLjpNXKQ7UqWOOZls+8vljStufhFkfqkj0xpHsCHTgEBRo9FMEcvYgAaXuCmBBQoPkyF1HNTNALRrWSTtwR38yGm7nkrI2pqtmEEp9W2XJeriEdtrURj8ZZkAIgJaFYsfKoFS8cv6SGryFwq5fCnlqdim/gjhD8BWlgk0iHt8Fs9OVp5RRL0hEz9MoG1PfUYuoqpyof5B6vu1Sr+aQeKCvby+RNCMNG7+PlbwztKTJf1OoZAXQuzNKPNvL2GbrKsJvUFmGDDJ72pB8jLwJy9ugXgzwKjGbVSdfyt8tgagpT0=
+  - secure: bMjLSjIwBBdaPqry7TPQoEbaVZTUFmZAFK61qxS0LAk3BHgQa9x6/9q1B1iPEcKmOoCvI6vdQPTRdup+k1lEW+Fu1I0LWe6Ae0KUZ4jxNWe2ZkzmHwtMidRsmoPe9Q3eTNVWofHbd5/yHQ+4SKOQckz2fIc6+TXgOE80mFTBEQ6RW+GSt/Tn8NdV1XKMQ6itDWJAgaKLgfZeLULAIqFu8PJqV/0hTnMzPE+TRSdWzd2wt78XMw2hiPtXvXOwAlxWJPAbwEPLxDy2mlJiPMkTty6XQn/y4qs4a7n8o7I/CqNmnGCCV3+Xh/SApJ29baVUsQDbMnfAAwe/F2d9SZZ4oQHYR5yfBtjF+q9t08ukLrpOVdkvh0pCbU/B2jM3gyGoIarhzQEw0TgsWeW2c0+FbDT1fbNYtww9XjxF93rN1ubSY9E4nwdnWDGqpIXQTKBNLewwx0WaBNcW/IkKwUzeXnkpDJYUpPYFFLl4rTXyoKcmMEYNR9YJ8jmhIGhmL30dedimoAinhRYWKKMYm/aDUnp4TvWQ76dfpwVeOdYexngyoAQ5NMKzcvnahUmpvuTH5wPN1S/5L5eE2MEVkx01g5Eis71QF0ijHNFCL01Kr35B6frlOYzqglnIGflRvMSUVmBsI1a4x9uFv0d0iqnC8QxmEuzPRvdwShgtp7bU+kk=
+jobs:
+  allow_failures:
+  - name: Run Security Scan
+  include:
+  - stage: test
+    name: Run Go tests
+    script:
+    - make
+  - stage: test
+    name: Run Security Scan
+    before_cache:
+    - 'mkdir -p $HOME/docker && docker images -a --filter=''dangling=false'' --format
+      ''{{.Repository}}:{{.Tag}} {{.ID}}'' | xargs -n 2 -t sh -c ''test -e $HOME/docker/$1.tar.gz
+      || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz''
+'
+    before_install:
+    - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh
+      -c "zcat {file} | docker load"; fi
+    install:
+    - sudo pip install awscli
+    - eval $(aws ecr get-login --region eu-west-1 --no-include-email)
+    - docker pull $SECSCAN_IMAGE
+    script:
+    - docker run --rm -v $(pwd):/code -e TRAVIS -e SNYK_TOKEN -e REPO=$TRAVIS_REPO_SLUG $SECSCAN_IMAGE

@@ -1,0 +1,19 @@
+version: '2'
+services:
+  postgresql:
+    image: postgres:9.5-alpine
+    restart: always
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d/
+  vault:
+    image: vault:0.9.3
+    ports:
+      - "${VAULT_PORT}:8200"
+    environment:
+      - SKIP_SETCAP=1
+      - VAULT_DEV_ROOT_TOKEN_ID=8fb95528-57c6-422e-9722-d2147bcba8ed

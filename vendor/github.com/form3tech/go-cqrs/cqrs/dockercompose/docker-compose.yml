@@ -1,0 +1,21 @@
+version: '2'
+services:
+  consul:
+    image: consul:1.4.1
+    ports:
+      - "${CONSUL_PORT}:8500"
+  sqs:
+    image: 288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/elasticmq
+    volumes:
+      - ./sqs/queues.conf:/queues.conf
+    environment:
+      - BIND_PORT=1212
+      - NODE_HOST=sqs
+    ports:
+      - "${SQS_PORT}:1212"
+
+  wait_for:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - sqs
+    command: sqs:1212
