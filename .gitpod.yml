@@ -3,7 +3,7 @@ image:
 
 tasks:
   - init: >
-      make  build
+      make build
     command: >
       interview-accountapi
 
@@ -15,5 +15,5 @@ ports:
   - port: 8080
     onOpen: ignore
 
-checkoutLocation: "go/src/github.com/demo-apps/go-gin-app"
-workspaceLocation: "go/src/github.com/demo-apps/go-gin-app"
+checkoutLocation: "go/src/github.com/form3tech-oss/interview-accountapi-pair-programming"
+workspaceLocation: "go/src/github.comform3tech-oss/interview-accountapi-pair-programming"
