@@ -1,11 +1,11 @@
 image:
   file: .gitpod.Dockerfile
 
-#tasks:
-#  - init: >
-#      make build
-#    command: >
-#      interview-accountapi
+tasks:
+  - init: >
+      make build
+    command: >
+      interview-accountapi
 
 vscode:
   extensions:
