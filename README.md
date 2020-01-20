@@ -14,3 +14,13 @@ in Go to access our fake [account API](http://api-docs.form3.tech/api.html#organ
  
 ### Notes
 - `account` model structs have been created for you in `pkg/accountapi/account.go`
+
+### Editor shortcuts
+
+|  |   |
+|----|-----|
+| Open file  | Ctrl+P (⌘+P on macOS) |
+| Search symbol | Ctrl+Shift+O (⌘+Shift+O on macOS) |
+| Search text | Ctrl+Shift+F (⌘+Shift+F on macOS) |
+
+[more tips and tricks](https://www.gitpod.io/docs/52_tips_and_tricks/)
