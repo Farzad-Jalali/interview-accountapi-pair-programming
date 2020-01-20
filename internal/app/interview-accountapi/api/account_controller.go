@@ -15,7 +15,7 @@ import (
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/api/queries"
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/convert"
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/log"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/models"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/models"
 	"github.com/gin-gonic/gin"
 	"github.com/go-openapi/strfmt"
 )

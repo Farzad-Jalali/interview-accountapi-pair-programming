@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/client/account_api"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/client/account_api"
 )
 
 // Default account HTTP client.

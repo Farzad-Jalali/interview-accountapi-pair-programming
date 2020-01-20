@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/convert"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/client/account_api"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/models"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/client/account_api"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 )
@@ -40,7 +40,7 @@ func (s *getAccountStage) and() *getAccountStage {
 }
 
 func (s *getAccountStage) an_authorized_service_user() *getAccountStage {
-	s.client = NewAccountAPIClient(ServerPort, buildDefaultToken(s.organisationId))
+	s.client = NewAccountAPIClient(ServerPort)
 	return s
 }
 

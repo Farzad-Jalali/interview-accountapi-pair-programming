@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/api/commandhandlers"
@@ -16,10 +18,9 @@ import (
 	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/app/interview-accountapi/log"
 	"github.com/giantswarm/retry-go"
 	"github.com/gin-gonic/gin"
-	"github.com/hashicorp/vault/api"
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 	_ "github.com/mattes/migrate/source/file"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/rubenv/sql-migrate"
 	"github.com/spf13/viper"
 )
@@ -27,8 +28,6 @@ import (
 func Configure() {
 	viper.AutomaticEnv()
 	viper.SetDefault("MessageVisibilityTimeout", 60)
-
-	loadSecrets()
 
 	db := connectToDatabase()
 
@@ -46,57 +45,12 @@ func Configure() {
 	setupRoutes()
 }
 
-func loadSecrets() {
-	vaultClient, err := api.NewClient(api.DefaultConfig())
-
-	if err != nil {
-		panic(err)
-	}
-
-	secret, err := vaultClient.Logical().Read("/secret/application")
-
-	if err != nil {
-		panic(fmt.Sprintf("could not read credentials secrets from vault path: /secret/application, error: %v", err))
-	}
-
-	log.Info("Loading secrets")
-	if secret != nil {
-		for key, value := range secret.Data {
-			log.Infof("Adding key=%s with value=****** to viper", key)
-			viper.Set(key, value)
-		}
-	}
-
-	secret, err = vaultClient.Logical().Read("/secret/" + settings.ServiceName)
-
-	if err != nil {
-		panic(fmt.Sprintf("could not read credentials secrets from vault path: /secret/interview-accountapi, error: %v", err))
-	}
-
-	if secret != nil {
-		for key, value := range secret.Data {
-			log.Infof("Adding key=%s with value=****** to viper", key)
-			viper.Set(key, value)
-		}
-	}
-
-}
-
 func connectToDatabase() *sqlx.DB {
-	host := viper.GetString("database-host")
-	username := getOrDefaultString("database-username", settings.ServiceName + "_user")
-	password := getOrDefaultString("database-password","123")
-	sslMode := getOrDefaultString("database-ssl-mode", "require")
-	port := getOrDefaultInt("database-port", 5432)
-
-	connectionString := newConnectionString(host, username, password, settings.ServiceName, port, sslMode)
-
 	var db *sqlx.DB
 	var err error
 
 	_ = retry.Do(func() error {
-		s := connectionString.String()
-		db, err = sqlx.Connect("postgres", s)
+		db, err = sqlx.Connect("sqlite3", ":memory:")
 		if err != nil {
 			return err
 		}
@@ -113,7 +67,17 @@ func connectToDatabase() *sqlx.DB {
 }
 
 func migrateDatabase(db *sql.DB) {
-	n, err := migrate.Exec(db, "postgres", &migrate.FileMigrationSource{Dir: "api/migrations"}, migrate.Up)
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	path := "internal/app/interview-accountapi/api/migrations/"
+	if strings.HasSuffix(dir,"internal/app/interview-accountapi") {
+		path = "api/migrations/"
+	}
+
+	n, err := migrate.Exec(db, "postgres", &migrate.FileMigrationSource{Dir: path}, migrate.Up)
 	if err != nil {
 		panic(fmt.Sprintf("could not migrate database, error: %v", err))
 	}

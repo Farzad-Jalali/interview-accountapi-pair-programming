@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := default
-GO111MODULE := off
+GO111MODULE := auto
 platform := $(shell uname)
 swagger_codegen_version := "v0.18.0"
 secscan_image := "288840537196.dkr.ecr.eu-west-1.amazonaws.com/tech.form3/secscan-go:latest"

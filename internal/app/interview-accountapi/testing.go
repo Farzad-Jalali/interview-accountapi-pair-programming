@@ -2,8 +2,8 @@ package interview_accountapi
 
 import (
 	"fmt"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/client"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/client/account_api"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/client"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/client/account_api"
 	"net/http"
 
 	rc "github.com/go-openapi/runtime/client"
@@ -20,7 +20,7 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return t.underlyingTransport.RoundTrip(req)
 }
 
-func NewAccountAPIClient(port int, token string) *account_api.Client {
+func NewAccountAPIClient(port int) *account_api.Client {
 	config := client.DefaultTransportConfig().
 		WithHost(fmt.Sprintf("%s:%d", "localhost", port)).
 		WithSchemes([]string{"http"})
@@ -29,7 +29,6 @@ func NewAccountAPIClient(port int, token string) *account_api.Client {
 
 	transport := &transport{
 		underlyingTransport: http.DefaultTransport,
-		token:               token,
 	}
 	h := &http.Client{Transport: transport}
 

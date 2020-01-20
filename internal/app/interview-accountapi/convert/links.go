@@ -2,7 +2,7 @@ package convert
 
 import (
 	"github.com/form3tech/go-form3-web/web"
-	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi-pair-programming/models"
+	"github.com/form3tech-oss/interview-accountapi-pair-programming/internal/swagger-client/interview-accountapi/models"
 )
 
 func FromLinks(links web.Links) *models.Links {
