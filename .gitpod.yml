@@ -16,4 +16,4 @@ ports:
     onOpen: ignore
 
 checkoutLocation: "go/src/github.com/form3tech-oss/interview-accountapi-pair-programming"
-workspaceLocation: "go/src/github.comform3tech-oss/interview-accountapi-pair-programming"
+workspaceLocation: "go/src/github.com/form3tech-oss/interview-accountapi-pair-programming"
