@@ -2,8 +2,18 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: dep ensure
+  - init: >
+      make  build
+    command: >
+      interview-accountapi
 
 vscode:
   extensions:
     - premparihar.gotestexplorer@0.1.10:jvUM8akrQ67vQxfjaxCgCg==
+
+ports:
+  - port: 8080
+    onOpen: ignore
+
+checkoutLocation: "go/src/github.com/demo-apps/go-gin-app"
+workspaceLocation: "go/src/github.com/demo-apps/go-gin-app"
