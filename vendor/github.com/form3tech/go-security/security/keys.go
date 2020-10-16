@@ -22,17 +22,12 @@ func GenerateTestKeyPair() (*TestKeyPair, error) {
 	bitSize := 2048
 
 	key, err := rsa.GenerateKey(reader, bitSize)
-	publicKey := &key.PublicKey
-
 	if err != nil {
 		return nil, err
 	}
-
-	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publicKey)
-
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(&key.PublicKey)
 	if err != nil {
 		return nil, fmt.Errorf("could not marshall public key, %v", err)
-
 	}
 
 	pemPublicKey := string(pem.EncodeToMemory(&pem.Block{
@@ -51,5 +46,4 @@ func GenerateTestKeyPair() (*TestKeyPair, error) {
 		PrivateKeyPem: string(pem.EncodeToMemory(privateKeyPem)),
 		RsaPrivateKey: key,
 	}, nil
-
 }
